@@ -2,9 +2,11 @@ import React, { InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 const InputBlock = styled.div`
-  width: 24rem;
+  width: 100%;
   height: 3.875rem;
-  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const Label = styled.label`

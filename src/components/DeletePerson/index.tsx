@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import BlackButton from "../BlackButton";
-import WhiteButton from "../WhiteButton";
+
 
 const Root = styled.div`
   width: 100vw;
@@ -45,6 +45,22 @@ const ButtonsContainer = styled.div`
   justify-content: space-between;
 `;
 
+const WhiteButton = styled.a`
+  width: 11rem;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  border: 1px solid #212121;
+  text-decoration: none;
+  color: #212121;
+
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 14px;
+`;
 
 function DeletePerson() {
   return (
@@ -54,10 +70,8 @@ function DeletePerson() {
         <TextP>Tem certeza que deseja excluir este Naver?</TextP>
 
         <ButtonsContainer>
-
-          <WhiteButton />
-          <BlackButton />
-          
+          <WhiteButton href="/home">Cancelar</WhiteButton>
+          <BlackButton link="/deleted" text="Excluir" />
         </ButtonsContainer>
       </ConfirmationBox>
     </Root>

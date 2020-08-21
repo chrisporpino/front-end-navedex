@@ -31,7 +31,9 @@ function Card() {
       <img src={deleteIcon} alt="Deletar" />
       </a>
 
+      <a href="/edit">
       <img src={editIcon} alt="Editar" />
+      </a>
     </CardContent>
   );
 }

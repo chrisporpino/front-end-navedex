@@ -20,14 +20,16 @@ const MainContainer = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   box-sizing: border-box;
   border: 1px solid #212121;
+  padding: 2rem;
 `;
 
 const LogoImg = styled.img`
   width: 14.75rem;
   height: 3.75rem;
-  margin: 2.5rem 0;
+  margin: 0.5rem 0;
 `;
 
 const Button = styled.a`
@@ -51,6 +53,7 @@ function Login() {
   return (
     <Root>
       <MainContainer>
+        
         <LogoImg src={logo} alt="Nave.rs" />
 
         <Input

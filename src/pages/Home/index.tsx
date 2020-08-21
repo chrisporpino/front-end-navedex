@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import Card from "../../components/Card";
 import Header from "../../components/Header";
+import BlackButton from "../../components/BlackButton";
 
 const Root = styled.div`
   width: 100vw;
@@ -39,7 +40,7 @@ function Home() {
       <MainContainer>
         <TitleDiv>
         <h1>Navers</h1>
-        <button> Adicionar Naver </button>
+        <BlackButton link="/add"  text="Adicionar Naver"/>
         </TitleDiv>
 
         <PeopleSection>

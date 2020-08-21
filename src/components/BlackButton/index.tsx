@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Button = styled.a`
   width: 11rem;
@@ -17,10 +17,15 @@ const Button = styled.a`
   font-size: 14px;
 `;
 
-function BlackButton() {
-  return(
-    <Button href="/deleted">Excluir</Button>
-  )
+interface BlackButtonProps {
+  text: string;
+  link: string;
 }
+
+const BlackButton: React.FC<BlackButtonProps> = ({ text, link }) => {
+  return (
+    <Button href={link}>{text}</Button>
+  );
+};
 
 export default BlackButton;
