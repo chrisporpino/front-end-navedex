@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, FormEvent } from "react";
+import { useHistory, Link } from "react-router-dom";
 import styled from "styled-components";
-import Header from "../../components/Header";
 
+import Header from "../../components/Header";
 import arrowIcon from "../../assets/images/icons/arrow-icon.png";
 import Input from "../../components/Input";
 import BlackButton from "../../components/BlackButton";
+import api, { headers } from "../../services/axios";
 
 const Root = styled.div`
   width: 100vw;
@@ -31,7 +33,7 @@ const TitleDiv = styled.div`
   margin-bottom: 2rem;
 `;
 
-const InputContainer = styled.form`
+const Form = styled.form`
   display: grid;
   grid-template-rows: repeat(4, 1fr);
   grid-template-columns: 1fr 1fr;
@@ -45,87 +47,107 @@ const ArrowIcon = styled.img`
 `;
 
 function AddPerson() {
+  const history = useHistory();
+
+  const [name, setName] = useState("");
+  const [job_role, setJobRole] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [admission_date, setAdmissionDate] = useState("");
+  const [participations, setParticipations] = useState("");
+  const [pictureURL, setPictureURL] = useState("");
+
+  function handleCreatePerson(e: FormEvent) {
+    e.preventDefault();
+
+    const body = {
+      name,
+      job_role,
+      birthdate,
+      admission_date,
+      project: participations,
+      url: pictureURL,
+    };
+
+    api
+      .post("navers", body, { headers })
+      .then((response) => {
+        history.push("/added");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        alert("Erro no cadastro!");
+      });
+  }
+
   return (
     <Root>
       <Header />
       <MainContainer>
         <TitleDiv>
-          <a href="/home">
+          <Link to="/home">
             <ArrowIcon src={arrowIcon} alt="Voltar" />
-          </a>
+          </Link>
           <h1>Adicionar Naver</h1>
         </TitleDiv>
 
-        <InputContainer>
+        <Form onSubmit={handleCreatePerson}>
           <Input
             name="name"
             label="Nome"
             placeholder="Nome"
-
-            // usar para integrar com o backend
-            // value={avatar}
-            // onChange={(e) => {
-            //   setAvatar(e.target.value);
-            // }}
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
           <Input
-            name="job"
+            name="job_role"
             label="Cargo"
             placeholder="Cargo"
-
-            // usar para integrar com o backend
-            // value={avatar}
-            // onChange={(e) => {
-            //   setAvatar(e.target.value);
-            // }}
+            value={job_role}
+            onChange={(e) => {
+              setJobRole(e.target.value);
+            }}
           />
           <Input
-            name="age"
-            label="Idade"
-            placeholder="Idade"
-
-            // usar para integrar com o backend
-            // value={avatar}
-            // onChange={(e) => {
-            //   setAvatar(e.target.value);
-            // }}
+            name="birthdate"
+            label="Data de Nascimento"
+            placeholder="Data de Nascimento"
+            value={birthdate}
+            onChange={(e) => {
+              setBirthdate(e.target.value);
+            }}
           />
           <Input
-            name="timeInCompany"
-            label="Tempo de Empresa"
-            placeholder="Tempo de Empresa"
-
-            // usar para integrar com o backend
-            // value={avatar}
-            // onChange={(e) => {
-            //   setAvatar(e.target.value);
-            // }}
+            name="admission_date"
+            label="Data de Admissão"
+            placeholder="Data de Admissão"
+            value={admission_date}
+            onChange={(e) => {
+              setAdmissionDate(e.target.value);
+            }}
           />
           <Input
             name="participations"
             label="Projetos que participou"
             placeholder="Projetos que participou"
-
-            // usar para integrar com o backend
-            // value={avatar}
-            // onChange={(e) => {
-            //   setAvatar(e.target.value);
-            // }}
+            value={participations}
+            onChange={(e) => {
+              setParticipations(e.target.value);
+            }}
           />
           <Input
-            name="picture"
+            name="pictureURL"
             label="URL da foto do Naver"
             placeholder="URL da foto do Naver"
-
-            // usar para integrar com o backend
-            // value={avatar}
-            // onChange={(e) => {
-            //   setAvatar(e.target.value);
-            // }}
+            value={pictureURL}
+            onChange={(e) => {
+              setPictureURL(e.target.value);
+            }}
           />
 
-          <BlackButton link="/added" text="Salvar" />
-        </InputContainer>
+          <BlackButton /* link="/added" */ text="Salvar" />
+        </Form>
       </MainContainer>
     </Root>
   );

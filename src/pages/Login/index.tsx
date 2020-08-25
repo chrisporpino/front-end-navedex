@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, FormEvent } from "react";
 import logo from "../../assets/images/logo.png";
 import Input from "../../components/Input";
 import styled from "styled-components";
+import api from "../../services/axios";
+import { useHistory } from "react-router-dom";
 
 const Root = styled.main`
   width: 100vw;
@@ -20,7 +22,6 @@ const MainContainer = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   box-sizing: border-box;
   border: 1px solid #212121;
   padding: 2rem;
@@ -32,8 +33,8 @@ const LogoImg = styled.img`
   margin: 0.5rem 0;
 `;
 
-const Button = styled.a`
-  width: 24rem;
+const Button = styled.button`
+  width: 100%;
   height: 2.5rem;
   background: #212121;
   color: #ffffff;
@@ -49,37 +50,69 @@ const Button = styled.a`
   font-size: 14px;
 `;
 
+const Form = styled.form`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+`;
+
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
+
+  const handleLogin = (e: FormEvent) => {
+    e.preventDefault();
+
+    const body = {
+      email: email,
+      password: password,
+    };
+
+    api
+      .post("users/login", body)
+      .then((response) => {
+        window.localStorage.setItem("token", response.data.token);
+        history.push("/home");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        alert("Usuário ou senha incorretos. Tente novamente.")
+      });
+  };
+
   return (
     <Root>
       <MainContainer>
-        
         <LogoImg src={logo} alt="Nave.rs" />
 
-        <Input
-          name="email"
-          label="E-mail"
-          placeholder="E-mail"
+        <Form onSubmit={handleLogin}>
+          <Input
+            name="email"
+            label="E-mail"
+            placeholder="E-mail"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
 
-          // usar para integrar com o backend
-          // value={avatar}
-          // onChange={(e) => {
-          //   setAvatar(e.target.value);
-          // }}
-        />
-
-        <Input
-          name="password"
-          label="Senha"
-          placeholder="Senha"
-
-          // usar para integrar com o backend
-          // value={avatar}
-          // onChange={(e) => {
-          //   setAvatar(e.target.value);
-          // }}
-        />
-        <Button href="/home">Entrar</Button>
+          <Input
+            name="password"
+            label="Senha"
+            placeholder="Senha"
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <Button type="submit">Entrar</Button>
+        </Form>
       </MainContainer>
     </Root>
   );
