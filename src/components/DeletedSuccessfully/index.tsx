@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import closeIcon from "../../assets/images/icons/close-icon.png";
+import { useProtectedPage } from "../../hooks/useProtectedPage";
 
 const Root = styled.div`
   width: 100vw;
@@ -38,7 +39,11 @@ const TextH2 = styled.h2`
   line-height: 36px;
 `;
 
-const TextP = styled.p`
+const CommonText = styled.p`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
   line-height: 36px;
 `;
 
@@ -49,13 +54,15 @@ const CloseIcon = styled.img`
 `
 
 function DeletedSuccessfully() {
+  useProtectedPage();
+
   return (
     <Root>
       <SuccessfullyBox>
 
         <TextBlock>
           <TextH2>Naver excluído</TextH2>
-          <TextP>Naver excluído com suceso!</TextP>
+          <CommonText>Naver excluído com suceso!</CommonText>
         </TextBlock>
         
         <a href="/home">

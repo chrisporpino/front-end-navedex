@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import BlackButton from "../BlackButton";
-
+import { useProtectedPage } from "../../hooks/useProtectedPage";
+import { useHistory } from "react-router-dom";
+import api, { headers } from "../../services/axios";
 
 const Root = styled.div`
   width: 100vw;
@@ -33,7 +35,11 @@ const TextH2 = styled.h2`
   line-height: 36px;
 `;
 
-const TextP = styled.p`
+const CommonText = styled.p`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
   line-height: 36px;
 `;
 
@@ -63,15 +69,37 @@ const WhiteButton = styled.a`
 `;
 
 function DeletePerson() {
+  useProtectedPage();
+
+  const person_id = window.localStorage.getItem("person_id");
+
+  const history = useHistory();
+
+  function handleClickToDelete() {
+    api
+      .delete(`navers/${person_id}`, { headers })
+      .then((response) => {
+        console.log("pessoa deletada", response.data);
+
+        history.push("/deleted");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        alert("Erro ao excluir!");
+      });
+  }
+
   return (
     <Root>
       <ConfirmationBox>
         <TextH2>Excluir Naver</TextH2>
-        <TextP>Tem certeza que deseja excluir este Naver?</TextP>
+        <CommonText>Tem certeza que deseja excluir este Naver?</CommonText>
 
         <ButtonsContainer>
           <WhiteButton href="/home">Cancelar</WhiteButton>
-          <BlackButton link="/deleted" text="Excluir" />
+          <div onClick={handleClickToDelete}>
+            <BlackButton text="Excluir" />
+          </div>
         </ButtonsContainer>
       </ConfirmationBox>
     </Root>
