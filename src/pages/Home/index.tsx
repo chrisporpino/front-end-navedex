@@ -72,7 +72,7 @@ function Home() {
         <TitleDiv>
           <Title>Navers</Title>
           <Link to="/add">
-            <BlackButton /* link={"/add"} */ text="Adicionar Naver" />
+            <BlackButton text="Adicionar Naver" />
           </Link>
         </TitleDiv>
 

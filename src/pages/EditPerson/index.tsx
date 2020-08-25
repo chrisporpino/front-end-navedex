@@ -147,7 +147,7 @@ function EditPerson() {
             }}
           />
 
-          <BlackButton /* link="/added" */ text="Salvar" />
+          <BlackButton onSubmitForm={handleCreatePerson} text="Salvar" />
         </Form>
       </MainContainer>
     </Root>

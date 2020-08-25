@@ -6,7 +6,8 @@ import deleteIcon from "../../assets/images/icons/delete-icon.png";
 import editIcon from "../../assets/images/icons/edit-icon.png";
 import ShowPerson from "../ShowPerson";
 import DeletePerson from "../DeletePerson";
-import Modal from "../Modal";
+import api, { headers } from "../../services/axios";
+import DeletedSuccessfully from "../DeletedSuccessfully";
 
 const CardContent = styled.div`
   width: 17.5rem;
@@ -87,9 +88,7 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
   const toggleDeleteModalVisibility = () =>
     setIsDeleteModalVisible(!isDeleteModalVisible);
 
-  function handleClickToDelete() {
-    saveId();
-    console.log(person.id);
+  function onClickOnDeleteIcon() {
     toggleDeleteModalVisibility();
   }
 
@@ -97,6 +96,23 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
     saveId();
     console.log(person.id);
     history.push("/edit");
+  }
+
+  const [isModalFeedbackOpen, setIsModalFeedbackOpen] = useState(false);
+  const toggleModalFeedback = () =>
+    setIsModalFeedbackOpen(!isModalFeedbackOpen);
+
+  function onDelete() {
+    api
+      .delete(`navers/${person.id}`, { headers })
+      .then((response) => {
+        toggleModalFeedback();
+        toggleDeleteModalVisibility();
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        alert("Erro ao excluir!");
+      });
   }
 
   return (
@@ -116,10 +132,17 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
       </TextBlock>
 
       <IconsContainer>
-        <Icon onClick={handleClickToDelete} src={deleteIcon} alt="Deletar" />
+        <Icon onClick={onClickOnDeleteIcon} src={deleteIcon} alt="Deletar" />
         <DeletePerson
           isOpen={isDeleteModalVisible}
           onClose={toggleDeleteModalVisibility}
+          handleClickToDelete={onDelete}
+        />
+        <DeletedSuccessfully
+          title="Naver excluído"
+          text="Naver excluído com sucesso"
+          isOpen={isModalFeedbackOpen}
+          onClose={toggleModalFeedback}
         />
 
         <Icon onClick={handleClickToEdit} src={editIcon} alt="Editar" />

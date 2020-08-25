@@ -121,7 +121,7 @@ interface ShowPersonProps {
 const ShowPerson: React.FC<ShowPersonProps> = ({ onClose }) => {
   // useProtectedPage();
   const overlayRef = React.useRef(null);
-  const handleOverlyClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  const handleOverlayClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (e.target === overlayRef.current) {
       onClose();
     }
@@ -164,7 +164,7 @@ const ShowPerson: React.FC<ShowPersonProps> = ({ onClose }) => {
   }
 
   return (
-    <Root ref={overlayRef} onClick={handleOverlyClick}>
+    <Root ref={overlayRef} onClick={handleOverlayClick}>
       <MainContainer>
         <ShowPicture>
           <Picture src={person.url} alt={person.name} />
