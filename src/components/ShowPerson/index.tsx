@@ -119,8 +119,7 @@ interface ShowPersonProps {
 }
 
 const ShowPerson: React.FC<ShowPersonProps> = ({ onClose }) => {
-  // function ShowPerson() {
-  useProtectedPage();
+  // useProtectedPage();
   const overlayRef = React.useRef(null);
   const handleOverlyClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (e.target === overlayRef.current) {
@@ -192,10 +191,9 @@ const ShowPerson: React.FC<ShowPersonProps> = ({ onClose }) => {
                 <CommonText>{person.project}</CommonText>
               </TextBlock>
             </TextBox>
-
-            {/* <Link to="/home"> */}
+            
             <CloseIcon onClick={onClose} src={closeIcon} alt="Fechar" />
-            {/* </Link> */}
+            
           </TextContainer>
           <IconsContainer>
             <Icon

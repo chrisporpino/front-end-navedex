@@ -5,7 +5,8 @@ import styled from "styled-components";
 import deleteIcon from "../../assets/images/icons/delete-icon.png";
 import editIcon from "../../assets/images/icons/edit-icon.png";
 import ShowPerson from "../ShowPerson";
-
+import DeletePerson from "../DeletePerson";
+import Modal from "../Modal";
 
 const CardContent = styled.div`
   width: 17.5rem;
@@ -69,22 +70,27 @@ interface CardPersonProps {
 const Card: React.FC<CardPersonProps> = ({ person }) => {
   const history = useHistory();
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const toggleModal = () => setIsModalVisible(!isModalVisible);
-
   function saveId() {
     window.localStorage.setItem("person_id", person.id);
   }
 
+  const [isPersonDetailsVisible, setIsPersonDetailsVisible] = useState(false);
+  const toggleDetailsVisibility = () =>
+    setIsPersonDetailsVisible(!isPersonDetailsVisible);
+
   function handleClickOnPicture() {
     saveId();
-    toggleModal();
+    toggleDetailsVisibility();
   }
+
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const toggleDeleteModalVisibility = () =>
+    setIsDeleteModalVisible(!isDeleteModalVisible);
 
   function handleClickToDelete() {
     saveId();
     console.log(person.id);
-    history.push("/delete");
+    toggleDeleteModalVisibility();
   }
 
   function handleClickToEdit() {
@@ -100,7 +106,9 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
         src={person.url}
         alt={person.name}
       />
-      {isModalVisible ? <ShowPerson onClose={toggleModal}/> : null}
+      {isPersonDetailsVisible ? (
+        <ShowPerson onClose={toggleDetailsVisibility} />
+      ) : null}
 
       <TextBlock>
         <TextTitle>{person.name}</TextTitle>
@@ -109,6 +117,11 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
 
       <IconsContainer>
         <Icon onClick={handleClickToDelete} src={deleteIcon} alt="Deletar" />
+        <DeletePerson
+          isOpen={isDeleteModalVisible}
+          onClose={toggleDeleteModalVisibility}
+        />
+
         <Icon onClick={handleClickToEdit} src={editIcon} alt="Editar" />
       </IconsContainer>
     </CardContent>

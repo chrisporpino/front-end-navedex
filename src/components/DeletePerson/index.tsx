@@ -7,14 +7,14 @@ import api, { headers } from "../../services/axios";
 
 const Root = styled.div`
   width: 100vw;
-  max-width: 1280px;
   height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  margin: 0 auto;
-  background: gray;
+  background-color: rgba(0, 0, 0, 0.8);
 `;
 
 const ConfirmationBox = styled.div`
@@ -66,10 +66,23 @@ const WhiteButton = styled.a`
   font-family: Montserrat;
   font-weight: 600;
   font-size: 14px;
+
+  cursor: pointer;
 `;
 
-function DeletePerson() {
-  useProtectedPage();
+interface DeletePersonProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+// function DeletePerson() {
+const DeletePerson: React.FC<DeletePersonProps> = ({ isOpen, onClose }) => {
+  const overlayRef = React.useRef(null);
+  const handleOverlyClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (e.target === overlayRef.current) {
+      onClose();
+    }
+  }
 
   const person_id = window.localStorage.getItem("person_id");
 
@@ -89,21 +102,21 @@ function DeletePerson() {
       });
   }
 
-  return (
-    <Root>
+  return isOpen ? (
+    <Root ref={overlayRef} onClick={handleOverlyClick}>
       <ConfirmationBox>
         <TextH2>Excluir Naver</TextH2>
         <CommonText>Tem certeza que deseja excluir este Naver?</CommonText>
 
         <ButtonsContainer>
-          <WhiteButton href="/home">Cancelar</WhiteButton>
+          <WhiteButton onClick={onClose}>Cancelar</WhiteButton>
           <div onClick={handleClickToDelete}>
             <BlackButton text="Excluir" />
           </div>
         </ButtonsContainer>
       </ConfirmationBox>
     </Root>
-  );
+  ) : null;
 }
 
 export default DeletePerson;

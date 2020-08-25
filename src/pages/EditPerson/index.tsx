@@ -88,7 +88,7 @@ function EditPerson() {
           <Link to="/home">
             <ArrowIcon src={arrowIcon} alt="Voltar" />
           </Link>
-          <h1>Adicionar Naver</h1>
+          <h1>Editar Naver</h1>
         </TitleDiv>
 
         <Form onSubmit={handleCreatePerson}>
