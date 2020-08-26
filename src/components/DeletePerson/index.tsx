@@ -1,20 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import BlackButton from "../BlackButton";
-import { useProtectedPage } from "../../hooks/useProtectedPage";
-import { useHistory } from "react-router-dom";
-import api, { headers } from "../../services/axios";
+// import { useHistory } from "react-router-dom";
+// import api, { headers } from "../../services/axios";
 
 const Root = styled.div`
   width: 100vw;
-  max-width: 1280px;
   height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  margin: 0 auto;
-  background: gray;
+  background-color: rgba(0, 0, 0, 0.8);
 `;
 
 const ConfirmationBox = styled.div`
@@ -66,44 +65,41 @@ const WhiteButton = styled.a`
   font-family: Montserrat;
   font-weight: 600;
   font-size: 14px;
+
+  cursor: pointer;
 `;
 
-function DeletePerson() {
-  useProtectedPage();
+interface DeletePersonProps {
+  isOpen: boolean;
+  onClose: () => void;
+  handleClickToDelete: () => void;
+}
 
-  const person_id = window.localStorage.getItem("person_id");
+const DeletePerson: React.FC<DeletePersonProps> = ({
+  isOpen,
+  onClose,
+  handleClickToDelete,
+}) => {
+  const overlayRef = React.useRef(null);
+  const handleOverlayClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (e.target === overlayRef.current) {
+      onClose();
+    }
+  };
 
-  const history = useHistory();
-
-  function handleClickToDelete() {
-    api
-      .delete(`navers/${person_id}`, { headers })
-      .then((response) => {
-        console.log("pessoa deletada", response.data);
-
-        history.push("/deleted");
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        alert("Erro ao excluir!");
-      });
-  }
-
-  return (
-    <Root>
+  return isOpen ? (
+    <Root ref={overlayRef} onClick={handleOverlayClick}>
       <ConfirmationBox>
         <TextH2>Excluir Naver</TextH2>
         <CommonText>Tem certeza que deseja excluir este Naver?</CommonText>
 
         <ButtonsContainer>
-          <WhiteButton href="/home">Cancelar</WhiteButton>
-          <div onClick={handleClickToDelete}>
-            <BlackButton text="Excluir" />
-          </div>
+          <WhiteButton onClick={onClose}>Cancelar</WhiteButton>
+          <BlackButton handleClickOnBlackButton={handleClickToDelete} text="Excluir" />
         </ButtonsContainer>
       </ConfirmationBox>
     </Root>
-  );
-}
+  ) : null;
+};
 
 export default DeletePerson;

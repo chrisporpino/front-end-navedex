@@ -1,6 +1,5 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const Button = styled.button`
   width: 11rem;
@@ -19,12 +18,14 @@ const Button = styled.button`
 
 interface BlackButtonProps {
   text: string;
+  handleClickOnBlackButton?: () => void;
+  onSubmitForm?: (e: FormEvent) => void;  
 }
 
-const BlackButton: React.FC<BlackButtonProps> = ({ text }) => {
+const BlackButton: React.FC<BlackButtonProps> = ({ text, handleClickOnBlackButton, onSubmitForm }) => {
   return (
     <div>
-      <Button type="submit">{text}</Button>
+      <Button onClick={handleClickOnBlackButton || onSubmitForm} type="submit">{text}</Button>
     </div>
   );
 };

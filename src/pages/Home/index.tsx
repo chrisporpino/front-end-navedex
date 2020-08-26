@@ -10,7 +10,7 @@ import { useProtectedPage } from "../../hooks/useProtectedPage";
 
 const Root = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100;
   margin: 0 auto;
   background: #ffffff;
 `;
@@ -72,13 +72,19 @@ function Home() {
         <TitleDiv>
           <Title>Navers</Title>
           <Link to="/add">
-            <BlackButton /* link={"/add"} */ text="Adicionar Naver" />
+            <BlackButton text="Adicionar Naver" />
           </Link>
         </TitleDiv>
 
         <PeopleSection>
           {people.map((person: Person) => {
-            return <Card key={person.id} person={person} />;
+            return (
+              <Card
+                key={person.id}
+                person={person}
+                handleDeletedPerson={getPeople}
+              />
+            );
           })}
         </PeopleSection>
       </MainContainer>

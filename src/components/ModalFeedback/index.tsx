@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 import closeIcon from "../../assets/images/icons/close-icon.png";
-import { useProtectedPage } from "../../hooks/useProtectedPage";
 
 const Root = styled.div`
   width: 100vw;
-  max-width: 1280px;
   height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  margin: 0 auto;
-  background: gray;
+  background-color: rgba(0, 0, 0, 0.8);
 `;
 
 const SuccessfullyBox = styled.div`
@@ -51,25 +51,42 @@ const CloseIcon = styled.img`
   width: 24px;
   height: 24px;
   margin: -12px -12px 0 0;
+  cursor: pointer;
 `;
 
-function AddedSuccessfully() {
-  useProtectedPage();
-
-  return (
-    <Root>
-      <SuccessfullyBox>
-        <TextBlock>
-          <TextH2>Naver adicionado</TextH2>
-          <CommonText>Naver adicionado com suceso!</CommonText>
-        </TextBlock>
-
-        <a href="/home">
-          <CloseIcon src={closeIcon} alt="Fechar" />
-        </a>
-      </SuccessfullyBox>
-    </Root>
-  );
+interface ModalFeedbackProps {
+  title: string;
+  text: string;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export default AddedSuccessfully;
+const ModalFeedback: React.FC<ModalFeedbackProps> = ({ title, text, isOpen, onClose }) => {
+  const history = useHistory();
+
+  const overlayRef = React.useRef(null);
+  const handleOverlayClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (e.target === overlayRef.current) {
+      goHome();
+    }
+  };
+
+  function goHome() {
+    onClose();
+    history.push("/home");
+  }
+
+  return isOpen ? (
+    <Root ref={overlayRef} onClick={handleOverlayClick}>
+      <SuccessfullyBox>
+        <TextBlock>
+          <TextH2>{title}</TextH2>
+          <CommonText>{text}</CommonText>
+        </TextBlock>
+        <CloseIcon onClick={goHome} src={closeIcon} alt="Fechar" />
+      </SuccessfullyBox>
+    </Root>
+  ) : null;
+};
+
+export default ModalFeedback;
