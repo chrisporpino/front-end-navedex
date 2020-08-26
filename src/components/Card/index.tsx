@@ -9,6 +9,9 @@ import DeletePerson from "../DeletePerson";
 import api, { headers } from "../../services/axios";
 import ModalFeedback from "../ModalFeedback";
 
+import * as moment from "moment";
+moment.locale("pt-br");
+
 const CardContent = styled.div`
   width: 17.5rem;
   height: 23.5;
@@ -58,17 +61,21 @@ const Icon = styled.img`
 `;
 
 export interface Person {
+  admission_date: string;
+  birthdate: string;
   id: string;
   job_role: string;
   name: string;
+  project: string;
   url: string;
 }
 
-interface CardPersonProps {
+export interface PersonProps {
   person: Person;
+  handleDeletedPerson: () => void;
 }
 
-const Card: React.FC<CardPersonProps> = ({ person }) => {
+const Card: React.FC<PersonProps> = ({ person, handleDeletedPerson }) => {
   const history = useHistory();
 
   function saveId() {
@@ -80,10 +87,45 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
     setIsPersonDetailsVisible(!isPersonDetailsVisible);
 
   function handleClickOnPicture() {
-    saveId();
-    console.log("salvou", person.id)
+    getPersonDetails();
     toggleDetailsVisibility();
   }
+
+  function getPersonDetails() {
+    api
+      .get(`navers/${person.id}`, { headers })
+      .then((response) => {
+      })
+      .catch((error) => {
+        console.log("show", error.response.data);
+      });
+  }
+
+  //  TO DO calcular data de nascimento
+
+  // function calculateAge() {
+  //   const today: Date = new Date();
+  //   const birthdate = new Date(person.birthdate);
+  //   const diff = Math.abs(today.getTime() - birthdate.getTime());
+  //   const years = Math.ceil((diff / (1000 * 60 * 60 * 24 * 365.25)));
+  //   console.log("Idade é", years);
+  // }
+
+    const today: Date = new Date();
+    const birthdate = new Date(person.birthdate);
+    const diffBirthdate = (today.getTime() - birthdate.getTime());
+    const yearInMilliseconds = (1000 * 60 * 60 * 24 * 365.25);
+    const age = Math.floor(diffBirthdate / yearInMilliseconds)
+    const calculatedAge = `${age} anos`
+  
+    const admission_date = new Date(person.admission_date);
+    const diffTimeAdmission = (today.getTime() - admission_date.getTime());
+    const years = Math.floor(diffTimeAdmission / yearInMilliseconds)
+    const monthsInMilliseconds = (diffTimeAdmission % (yearInMilliseconds))
+    const convertMonths = Math.floor(monthsInMilliseconds/(yearInMilliseconds/12))
+    const timeInCompany = `${years} anos e ${convertMonths} meses`
+        
+
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const toggleDeleteModalVisibility = () =>
@@ -91,6 +133,7 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
 
   function onClickOnDeleteIcon() {
     toggleDeleteModalVisibility();
+    toggleDetailsVisibility();
   }
 
   function handleClickToEdit() {
@@ -104,7 +147,17 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
 
   function goToHome() {
     toggleModalFeedback();
-    history.push("/home");
+    handleDeletedPerson()
+    // history.push("/home");
+  }
+
+  function onClickOnDeleteFromHome() {
+    toggleDeleteModalVisibility();
+  }
+
+  function confirmDeleteFromHome () {
+    onDelete()
+    toggleDeleteModalVisibility();
   }
 
   function onDelete() {
@@ -112,7 +165,6 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
       .delete(`navers/${person.id}`, { headers })
       .then((response) => {
         toggleModalFeedback();
-        toggleDeleteModalVisibility();
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -131,19 +183,21 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
         isOpen={isPersonDetailsVisible}
         onClose={toggleDetailsVisibility}
         handleClickToDelete={onClickOnDeleteIcon}
+        person={person}
+        age={calculatedAge}
+        timeOfWork={timeInCompany}
       />
       <DeletePerson
-          isOpen={isDeleteModalVisible}
-          onClose={toggleDeleteModalVisibility}
-          handleClickToDelete={onDelete}
-        />
-        <ModalFeedback
-          title="Naver excluído"
-          text="Naver excluído com sucesso"
-          isOpen={isModalFeedbackOpen}
-          onClose={goToHome}
-        />
-
+        isOpen={isDeleteModalVisible}
+        onClose={toggleDeleteModalVisibility}
+        handleClickToDelete={onDelete}
+      />
+      <ModalFeedback
+        title="Naver excluído"
+        text="Naver excluído com sucesso"
+        isOpen={isModalFeedbackOpen}
+        onClose={goToHome}
+      />
 
       <TextBlock>
         <TextTitle>{person.name}</TextTitle>
@@ -151,11 +205,11 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
       </TextBlock>
 
       <IconsContainer>
-        <Icon onClick={onClickOnDeleteIcon} src={deleteIcon} alt="Deletar" />
+        <Icon onClick={onClickOnDeleteFromHome} src={deleteIcon} alt="Deletar" />
         <DeletePerson
           isOpen={isDeleteModalVisible}
           onClose={toggleDeleteModalVisibility}
-          handleClickToDelete={onDelete}
+          handleClickToDelete={confirmDeleteFromHome}
         />
         <ModalFeedback
           title="Naver excluído"

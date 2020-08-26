@@ -61,22 +61,17 @@ interface ModalFeedbackProps {
   onClose: () => void;
 }
 
-const ModalFeedback: React.FC<ModalFeedbackProps> = ({
-  title,
-  text,
-  isOpen,
-  onClose,
-}) => {
+const ModalFeedback: React.FC<ModalFeedbackProps> = ({ title, text, isOpen, onClose }) => {
   const history = useHistory();
 
   const overlayRef = React.useRef(null);
   const handleOverlayClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (e.target === overlayRef.current) {
-      goToHome();
+      goHome();
     }
   };
 
-  function goToHome() {
+  function goHome() {
     onClose();
     history.push("/home");
   }
@@ -88,7 +83,7 @@ const ModalFeedback: React.FC<ModalFeedbackProps> = ({
           <TextH2>{title}</TextH2>
           <CommonText>{text}</CommonText>
         </TextBlock>
-        <CloseIcon onClick={goToHome} src={closeIcon} alt="Fechar" />
+        <CloseIcon onClick={goHome} src={closeIcon} alt="Fechar" />
       </SuccessfullyBox>
     </Root>
   ) : null;

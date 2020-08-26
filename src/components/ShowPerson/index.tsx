@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React /* , { useState, useEffect } */ from "react";
 import styled from "styled-components";
 
 import closeIcon from "../../assets/images/icons/close-icon.png";
-import api, { headers } from "../../services/axios";
-import { useProtectedPage } from "../../hooks/useProtectedPage";
+// import api, { headers } from "../../services/axios";
+// import { useProtectedPage } from "../../hooks/useProtectedPage";
 
 import deleteIcon from "../../assets/images/icons/delete-icon.png";
 import editIcon from "../../assets/images/icons/edit-icon.png";
@@ -105,82 +105,37 @@ const CloseIcon = styled.img`
   cursor: pointer;
 `;
 
-interface PersonDetails {
-  admission_date: string;
-  birthdate: string;
-  id: string;
-  job_role: string;
-  name: string;
-  project: string;
-  url: string;
-}
-
 interface ShowPersonProps {
   isOpen: boolean;
   onClose: () => void;
   handleClickToDelete: () => void;
+  person: Person;
+  age: string;
+  timeOfWork: string;
 }
 
-const ShowPerson: React.FC<ShowPersonProps> = ({ isOpen, onClose, handleClickToDelete }) => {
+const ShowPerson: React.FC<ShowPersonProps> = ({
+  isOpen,
+  onClose,
+  handleClickToDelete,
+  person,
+  age,
+  timeOfWork
+}) => {
   const overlayRef = React.useRef(null);
   const handleOverlayClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (e.target === overlayRef.current) {
       onClose();
     }
-  }
-  
-  const person_id = window.localStorage.getItem("person_id");
+  };
 
   const history = useHistory();
-  const [person, setPerson] = useState<PersonDetails>({} as PersonDetails);
-  
-
-  useEffect(() => {
-    getPersonDetails();
-    // calculateAge()
-    console.log("show", person_id)
-  }, []);
-
-
-  function getPersonDetails() {
-    api
-      .get(`navers/${person_id}`, { headers })
-      .then((response) => {
-        setPerson(response.data);
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-      });
-  }
-
-  function saveId() {
-    window.localStorage.setItem("person_id", person.id);
-  }
-
-  // function handleClickToDelete() {
-  //   saveId();
-  //   console.log(person.id);
-  //   history.push("/delete");
-  // }
 
   function handleClickToEdit() {
-    saveId();
-    console.log(person.id);
     history.push("/edit");
   }
 
-  // const today = new Date();
-
-  // const calculateAge = () => {
-  //   console.log(person.birthdate);
-  //   // console.log({today});
-  // }
-
-  // function calculateTimeInCompany() {
-
-  // }
-
-  return isOpen ?  (
+  return isOpen ? (
     <Root ref={overlayRef} onClick={handleOverlayClick}>
       <MainContainer>
         <ShowPicture>
@@ -195,12 +150,12 @@ const ShowPerson: React.FC<ShowPersonProps> = ({ isOpen, onClose, handleClickToD
 
               <TextBlock>
                 <BoldText>Idade</BoldText>
-                <CommonText>{person.birthdate}</CommonText>
+                <CommonText>{age}</CommonText>
               </TextBlock>
 
               <TextBlock>
                 <BoldText>Tempo de Empresa</BoldText>
-                <CommonText>{person.admission_date}</CommonText>
+                <CommonText>{timeOfWork}</CommonText>
               </TextBlock>
 
               <TextBlock>
@@ -208,9 +163,8 @@ const ShowPerson: React.FC<ShowPersonProps> = ({ isOpen, onClose, handleClickToD
                 <CommonText>{person.project}</CommonText>
               </TextBlock>
             </TextBox>
-            
+
             <CloseIcon onClick={onClose} src={closeIcon} alt="Fechar" />
-            
           </TextContainer>
           <IconsContainer>
             <Icon

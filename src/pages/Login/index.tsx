@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, useEffect } from "react";
 import logo from "../../assets/images/logo.png";
 import Input from "../../components/Input";
 import styled from "styled-components";
@@ -61,9 +61,20 @@ const Form = styled.form`
 `;
 
 function Login() {
+  const history = useHistory();
+
+  const token = window.localStorage.getItem("token");
+
+  useEffect(() => {
+    if (token === null) {
+      history.push("/");
+    } else {
+      history.push("/home");
+    }
+  }, [history]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
@@ -111,7 +122,7 @@ function Login() {
               setPassword(e.target.value);
             }}
           />
-          <Button type="submit">Entrar</Button>
+          <Button onSubmit={handleLogin} type="submit">Entrar</Button>
         </Form>
       </MainContainer>
     </Root>

@@ -1,5 +1,5 @@
 import React, { useState, FormEvent } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Header from "../../components/Header";
