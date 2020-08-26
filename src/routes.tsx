@@ -1,30 +1,24 @@
-import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
 
-import Login from './pages/Login';
-import Home from './pages/Home';
-import ShowPerson from './components/ShowPerson';
-import DeletePerson from './components/DeletePerson';
-import DeletedSuccessfully from './components/DeletedSuccessfully';
-import EditPerson from './pages/EditPerson';
-import AddPerson from './pages/AddPerson';
-import EditedSuccessfully from './components/EditedSuccessfully';
-import AddedSuccessfully from './components/AddedSuccessfully';
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import ShowPerson from "./components/ShowPerson";
+import DeletePerson from "./components/DeletePerson";
+import EditPerson from "./pages/EditPerson";
+import AddPerson from "./pages/AddPerson";
 
 function Routes() {
-  return(
+  return (
     <BrowserRouter>
       <Route exact path="/" component={Login} />
       <Route path="/home" component={Home} />
       <Route path="/show" component={ShowPerson} />
       <Route path="/delete" component={DeletePerson} />
-      <Route path="/deleted" component={DeletedSuccessfully} />
       <Route path="/edit" component={EditPerson} />
-      <Route path="/edited" component={EditedSuccessfully} />
       <Route path="/add" component={AddPerson} />
-      <Route path="/added" component={AddedSuccessfully} />
     </BrowserRouter>
-  )
+  );
 }
 
 export default Routes;

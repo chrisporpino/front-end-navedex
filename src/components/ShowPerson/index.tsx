@@ -8,6 +8,7 @@ import { useProtectedPage } from "../../hooks/useProtectedPage";
 import deleteIcon from "../../assets/images/icons/delete-icon.png";
 import editIcon from "../../assets/images/icons/edit-icon.png";
 import { useHistory } from "react-router-dom";
+import { Person } from "../Card";
 
 const Root = styled.div`
   width: 100vw;
@@ -115,26 +116,31 @@ interface PersonDetails {
 }
 
 interface ShowPersonProps {
+  isOpen: boolean;
   onClose: () => void;
+  handleClickToDelete: () => void;
 }
 
-const ShowPerson: React.FC<ShowPersonProps> = ({ onClose }) => {
-  // useProtectedPage();
+const ShowPerson: React.FC<ShowPersonProps> = ({ isOpen, onClose, handleClickToDelete }) => {
   const overlayRef = React.useRef(null);
   const handleOverlayClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (e.target === overlayRef.current) {
       onClose();
     }
   }
+  
+  const person_id = window.localStorage.getItem("person_id");
 
   const history = useHistory();
   const [person, setPerson] = useState<PersonDetails>({} as PersonDetails);
+  
 
   useEffect(() => {
     getPersonDetails();
+    // calculateAge()
+    console.log("show", person_id)
   }, []);
 
-  const person_id = window.localStorage.getItem("person_id");
 
   function getPersonDetails() {
     api
@@ -151,11 +157,11 @@ const ShowPerson: React.FC<ShowPersonProps> = ({ onClose }) => {
     window.localStorage.setItem("person_id", person.id);
   }
 
-  function handleClickToDelete() {
-    saveId();
-    console.log(person.id);
-    history.push("/delete");
-  }
+  // function handleClickToDelete() {
+  //   saveId();
+  //   console.log(person.id);
+  //   history.push("/delete");
+  // }
 
   function handleClickToEdit() {
     saveId();
@@ -163,7 +169,18 @@ const ShowPerson: React.FC<ShowPersonProps> = ({ onClose }) => {
     history.push("/edit");
   }
 
-  return (
+  // const today = new Date();
+
+  // const calculateAge = () => {
+  //   console.log(person.birthdate);
+  //   // console.log({today});
+  // }
+
+  // function calculateTimeInCompany() {
+
+  // }
+
+  return isOpen ?  (
     <Root ref={overlayRef} onClick={handleOverlayClick}>
       <MainContainer>
         <ShowPicture>
@@ -207,7 +224,7 @@ const ShowPerson: React.FC<ShowPersonProps> = ({ onClose }) => {
         </InfoContainer>
       </MainContainer>
     </Root>
-  );
+  ) : null;
 };
 
 export default ShowPerson;

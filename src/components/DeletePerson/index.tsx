@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import BlackButton from "../BlackButton";
-import { useHistory } from "react-router-dom";
-import api, { headers } from "../../services/axios";
-import DeletedSuccessfully from "../DeletedSuccessfully";
+// import { useHistory } from "react-router-dom";
+// import api, { headers } from "../../services/axios";
 
 const Root = styled.div`
   width: 100vw;

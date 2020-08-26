@@ -7,6 +7,7 @@ import arrowIcon from "../../assets/images/icons/arrow-icon.png";
 import Input from "../../components/Input";
 import BlackButton from "../../components/BlackButton";
 import api, { headers } from "../../services/axios";
+import ModalFeedback from "../../components/ModalFeedback";
 
 const Root = styled.div`
   width: 100vw;
@@ -32,6 +33,14 @@ const TitleDiv = styled.div`
   margin-bottom: 2rem;
 `;
 
+const TextTitle = styled.h1`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+`;
+
 const Form = styled.form`
   display: grid;
   grid-template-rows: repeat(4, 1fr);
@@ -46,8 +55,6 @@ const ArrowIcon = styled.img`
 `;
 
 function EditPerson() {
-  const history = useHistory();
-
   const [name, setName] = useState("");
   const [job_role, setJobRole] = useState("");
   const [birthdate, setBirthdate] = useState("");
@@ -55,7 +62,12 @@ function EditPerson() {
   const [participations, setParticipations] = useState("");
   const [pictureURL, setPictureURL] = useState("");
 
-  function handleCreatePerson(e: FormEvent) {
+  const [isModalFeedbackOpen, setIsModalFeedbackOpen] = useState(false);
+  const toggleModalFeedback = () => {
+    setIsModalFeedbackOpen(!isModalFeedbackOpen);
+  };
+
+  function handleEditPerson(e: FormEvent) {
     e.preventDefault();
 
     const person_id = window.localStorage.getItem("person_id");
@@ -72,7 +84,7 @@ function EditPerson() {
     api
       .put(`navers/${person_id}`, body, { headers })
       .then((response) => {
-        history.push("/edited");
+        toggleModalFeedback();
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -88,10 +100,10 @@ function EditPerson() {
           <Link to="/home">
             <ArrowIcon src={arrowIcon} alt="Voltar" />
           </Link>
-          <h1>Editar Naver</h1>
+          <TextTitle>Editar Naver</TextTitle>
         </TitleDiv>
 
-        <Form onSubmit={handleCreatePerson}>
+        <Form onSubmit={handleEditPerson}>
           <Input
             name="name"
             label="Nome"
@@ -147,7 +159,13 @@ function EditPerson() {
             }}
           />
 
-          <BlackButton onSubmitForm={handleCreatePerson} text="Salvar" />
+          <BlackButton onSubmitForm={handleEditPerson} text="Salvar" />
+          <ModalFeedback
+            title="Naver atualizado"
+            text="Naver atualizado com sucesso!"
+            isOpen={isModalFeedbackOpen}
+            onClose={toggleModalFeedback}
+          />
         </Form>
       </MainContainer>
     </Root>

@@ -7,7 +7,7 @@ import editIcon from "../../assets/images/icons/edit-icon.png";
 import ShowPerson from "../ShowPerson";
 import DeletePerson from "../DeletePerson";
 import api, { headers } from "../../services/axios";
-import DeletedSuccessfully from "../DeletedSuccessfully";
+import ModalFeedback from "../ModalFeedback";
 
 const CardContent = styled.div`
   width: 17.5rem;
@@ -81,6 +81,7 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
 
   function handleClickOnPicture() {
     saveId();
+    console.log("salvou", person.id)
     toggleDetailsVisibility();
   }
 
@@ -94,13 +95,17 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
 
   function handleClickToEdit() {
     saveId();
-    console.log(person.id);
     history.push("/edit");
   }
 
   const [isModalFeedbackOpen, setIsModalFeedbackOpen] = useState(false);
   const toggleModalFeedback = () =>
     setIsModalFeedbackOpen(!isModalFeedbackOpen);
+
+  function goToHome() {
+    toggleModalFeedback();
+    history.push("/home");
+  }
 
   function onDelete() {
     api
@@ -122,9 +127,23 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
         src={person.url}
         alt={person.name}
       />
-      {isPersonDetailsVisible ? (
-        <ShowPerson onClose={toggleDetailsVisibility} />
-      ) : null}
+      <ShowPerson
+        isOpen={isPersonDetailsVisible}
+        onClose={toggleDetailsVisibility}
+        handleClickToDelete={onClickOnDeleteIcon}
+      />
+      <DeletePerson
+          isOpen={isDeleteModalVisible}
+          onClose={toggleDeleteModalVisibility}
+          handleClickToDelete={onDelete}
+        />
+        <ModalFeedback
+          title="Naver excluído"
+          text="Naver excluído com sucesso"
+          isOpen={isModalFeedbackOpen}
+          onClose={goToHome}
+        />
+
 
       <TextBlock>
         <TextTitle>{person.name}</TextTitle>
@@ -138,11 +157,11 @@ const Card: React.FC<CardPersonProps> = ({ person }) => {
           onClose={toggleDeleteModalVisibility}
           handleClickToDelete={onDelete}
         />
-        <DeletedSuccessfully
+        <ModalFeedback
           title="Naver excluído"
           text="Naver excluído com sucesso"
           isOpen={isModalFeedbackOpen}
-          onClose={toggleModalFeedback}
+          onClose={goToHome}
         />
 
         <Icon onClick={handleClickToEdit} src={editIcon} alt="Editar" />

@@ -7,7 +7,7 @@ import arrowIcon from "../../assets/images/icons/arrow-icon.png";
 import Input from "../../components/Input";
 import BlackButton from "../../components/BlackButton";
 import api, { headers } from "../../services/axios";
-import AddedSuccessfully from "../../components/AddedSuccessfully";
+import ModalFeedback from "../../components/ModalFeedback";
 
 const Root = styled.div`
   width: 100vw;
@@ -34,6 +34,14 @@ const TitleDiv = styled.div`
   margin-bottom: 2rem;
 `;
 
+const TextTitle = styled.h1`
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+`;
+
 const Form = styled.form`
   display: grid;
   grid-template-rows: repeat(4, 1fr);
@@ -48,14 +56,17 @@ const ArrowIcon = styled.img`
 `;
 
 function AddPerson() {
-  const history = useHistory();
-
   const [name, setName] = useState("");
   const [job_role, setJobRole] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [admission_date, setAdmissionDate] = useState("");
   const [participations, setParticipations] = useState("");
   const [pictureURL, setPictureURL] = useState("");
+
+  const [isModalFeedbackOpen, setIsModalFeedbackOpen] = useState(false);
+  const toggleModalFeedback = () => {
+    setIsModalFeedbackOpen(!isModalFeedbackOpen);
+  };
 
   function handleCreatePerson(e: FormEvent) {
     e.preventDefault();
@@ -72,20 +83,13 @@ function AddPerson() {
     api
       .post("navers", body, { headers })
       .then((response) => {
-        // history.push("/added");
-        toggleModalFeedback()
+        toggleModalFeedback();
       })
       .catch((error) => {
         console.log(error.response.data);
         alert("Erro no cadastro!");
       });
   }
-
-  const [isModalFeedbackOpen, setIsModalFeedbackOpen] = useState(false);
-  const toggleModalFeedback = () => {
-    setIsModalFeedbackOpen(!isModalFeedbackOpen);
-  }
-    
 
   return (
     <Root>
@@ -95,7 +99,7 @@ function AddPerson() {
           <Link to="/home">
             <ArrowIcon src={arrowIcon} alt="Voltar" />
           </Link>
-          <h1>Adicionar Naver</h1>
+          <TextTitle>Adicionar Naver</TextTitle>
         </TitleDiv>
 
         <Form onSubmit={handleCreatePerson}>
@@ -143,7 +147,7 @@ function AddPerson() {
             onChange={(e) => {
               setParticipations(e.target.value);
             }}
-          />          
+          />
           <Input
             name="pictureURL"
             label="URL da foto do Naver"
@@ -155,12 +159,12 @@ function AddPerson() {
           />
 
           <BlackButton onSubmitForm={handleCreatePerson} text="Salvar" />
-          <AddedSuccessfully
-          title="Naver criado"
-          text="Naver criado com sucesso!"
-          isOpen={isModalFeedbackOpen}
-          onClose={toggleModalFeedback}
-        />
+          <ModalFeedback
+            title="Naver criado"
+            text="Naver criado com sucesso!"
+            isOpen={isModalFeedbackOpen}
+            onClose={toggleModalFeedback}
+          />
         </Form>
       </MainContainer>
     </Root>
