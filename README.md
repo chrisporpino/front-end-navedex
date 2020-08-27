@@ -1,7 +1,7 @@
 # Nave.rs | Desafio de Front-end
 Desenvolvimento de aplicações completas, incluindo frontend Web com React e backend com Node.js.
 
-![Screenshot_1](https://raw.githubusercontent.com/cporpino/front-end-navedex/master/src/assets/images/nave_cover.png)
+![Screenshot_1](https://raw.githubusercontent.com/cporpino/demonstrations/master/navedex/nave_cover.png)
 <br>
 
 # Navedex - Front-end
@@ -9,7 +9,7 @@ Desenvolvimento de aplicações completas, incluindo frontend Web com React e ba
 :dash: [Deploy da aplicação](http://ifuture-sagan.surge.sh/)
 
 <p align="center">
-  <img  height='600' src='https://user-images.githubusercontent.com/45580434/79641732-bd917180-816f-11ea-810b-59ee03a3367b.gif'>
+  <img  height='700' src='https://raw.githubusercontent.com/cporpino/demonstrations/master/navedex/presentation.gif'>
 </p>
 
 <br>
@@ -27,7 +27,7 @@ Desenvolvimento de aplicações completas, incluindo frontend Web com React e ba
 
 <br>
 
-## 3 Principais desafios deste projeto
+## Principais desafios deste projeto
 
 - **Modais**
 
@@ -44,13 +44,13 @@ A API recebe e fornece datas de nascimento e adimissão, enquanto o layout do Fi
 ## Canais de comunicação
 
 
-[<img src="https://media-exp1.licdn.com/dms/image/C4E03AQFW94zSWB_EDA/profile-displayphoto-shrink_400_400/0?e=1599696000&v=beta&t=JlbI8zI3NgU-ORkIQPZJvwV5CzD8-W0Ad46eAxRQaEU" width=115><br><sub>Christhopher Porpino</sub>](https://www.linkedin.com/in/cporpino/) |
+[<img src="https://avatars3.githubusercontent.com/u/53712536?s=460&u=8fce4248cd2ecbda14c8bf3f3b649bc07d3d47c6&v=4" width=115><br><sub>Christhopher Porpino</sub>](https://www.linkedin.com/in/cporpino/) |
 | :---:
 
 *Full Stack Web Developer | Engenheiro Civil*
 
-[Linkedin](https://www.linkedin.com/in/cporpino/)
-[Github](https://github.com/cporpino)
+[Linkedin](https://www.linkedin.com/in/cporpino/) |
+[Github](https://github.com/cporpino) |
 [Email](cgporpinof@gmail.com)
 
 </div>
