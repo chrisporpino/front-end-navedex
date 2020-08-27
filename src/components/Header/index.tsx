@@ -5,7 +5,6 @@ import logo from "../../assets/images/logo.png";
 import { useHistory } from "react-router-dom";
 
 const HeaderContent = styled.header`
-  width: 100vw;
   height: 85px;
   display: flex;
   align-items: center;

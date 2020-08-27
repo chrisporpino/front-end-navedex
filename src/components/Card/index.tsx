@@ -18,7 +18,6 @@ const CardContent = styled.div`
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
 `;
 
 const ProfilePic = styled.img`
@@ -27,11 +26,8 @@ const ProfilePic = styled.img`
   cursor: pointer;
 `;
 
-const TextBlock = styled.div``;
-
 const TextTitle = styled.p`
   margin-top: 1rem;
-
   font-family: Montserrat;
   font-style: normal;
   font-weight: 600;
@@ -42,7 +38,6 @@ const TextTitle = styled.p`
 const TextRole = styled.p`
   margin-top: 4px;
   margin-bottom: 10px;
-
   font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
@@ -94,38 +89,27 @@ const Card: React.FC<PersonProps> = ({ person, handleDeletedPerson }) => {
   function getPersonDetails() {
     api
       .get(`navers/${person.id}`, { headers })
-      .then((response) => {
-      })
+      .then((response) => {})
       .catch((error) => {
         console.log("show", error.response.data);
       });
   }
 
-  //  TO DO calcular data de nascimento
+  const today: Date = new Date();
+  const birthdate = new Date(person.birthdate);
+  const diffBirthdate = today.getTime() - birthdate.getTime();
+  const yearInMilliseconds = 1000 * 60 * 60 * 24 * 365.25;
+  const age = Math.floor(diffBirthdate / yearInMilliseconds);
+  const calculatedAge = `${age} anos`;
 
-  // function calculateAge() {
-  //   const today: Date = new Date();
-  //   const birthdate = new Date(person.birthdate);
-  //   const diff = Math.abs(today.getTime() - birthdate.getTime());
-  //   const years = Math.ceil((diff / (1000 * 60 * 60 * 24 * 365.25)));
-  //   console.log("Idade é", years);
-  // }
-
-    const today: Date = new Date();
-    const birthdate = new Date(person.birthdate);
-    const diffBirthdate = (today.getTime() - birthdate.getTime());
-    const yearInMilliseconds = (1000 * 60 * 60 * 24 * 365.25);
-    const age = Math.floor(diffBirthdate / yearInMilliseconds)
-    const calculatedAge = `${age} anos`
-  
-    const admission_date = new Date(person.admission_date);
-    const diffTimeAdmission = (today.getTime() - admission_date.getTime());
-    const years = Math.floor(diffTimeAdmission / yearInMilliseconds)
-    const monthsInMilliseconds = (diffTimeAdmission % (yearInMilliseconds))
-    const convertMonths = Math.floor(monthsInMilliseconds/(yearInMilliseconds/12))
-    const timeInCompany = `${years} anos e ${convertMonths} meses`
-        
-
+  const admission_date = new Date(person.admission_date);
+  const diffTimeAdmission = today.getTime() - admission_date.getTime();
+  const years = Math.floor(diffTimeAdmission / yearInMilliseconds);
+  const monthsInMilliseconds = diffTimeAdmission % yearInMilliseconds;
+  const convertMonths = Math.floor(
+    monthsInMilliseconds / (yearInMilliseconds / 12)
+  );
+  const timeInCompany = `${years} anos e ${convertMonths} meses`;
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const toggleDeleteModalVisibility = () =>
@@ -147,16 +131,15 @@ const Card: React.FC<PersonProps> = ({ person, handleDeletedPerson }) => {
 
   function goToHome() {
     toggleModalFeedback();
-    handleDeletedPerson()
-    // history.push("/home");
+    handleDeletedPerson();
   }
 
   function onClickOnDeleteFromHome() {
     toggleDeleteModalVisibility();
   }
 
-  function confirmDeleteFromHome () {
-    onDelete()
+  function confirmDeleteFromHome() {
+    onDelete();
     toggleDeleteModalVisibility();
   }
 
@@ -199,13 +182,17 @@ const Card: React.FC<PersonProps> = ({ person, handleDeletedPerson }) => {
         onClose={goToHome}
       />
 
-      <TextBlock>
+      <div>
         <TextTitle>{person.name}</TextTitle>
         <TextRole>{person.job_role}</TextRole>
-      </TextBlock>
+      </div>
 
       <IconsContainer>
-        <Icon onClick={onClickOnDeleteFromHome} src={deleteIcon} alt="Deletar" />
+        <Icon
+          onClick={onClickOnDeleteFromHome}
+          src={deleteIcon}
+          alt="Deletar"
+        />
         <DeletePerson
           isOpen={isDeleteModalVisible}
           onClose={toggleDeleteModalVisibility}

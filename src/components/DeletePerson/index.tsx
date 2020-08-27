@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import BlackButton from "../BlackButton";
-// import { useHistory } from "react-router-dom";
-// import api, { headers } from "../../services/axios";
 
 const Root = styled.div`
   width: 100vw;
@@ -61,12 +59,11 @@ const WhiteButton = styled.a`
   border: 1px solid #212121;
   text-decoration: none;
   color: #212121;
+  cursor: pointer;
 
   font-family: Montserrat;
   font-weight: 600;
-  font-size: 14px;
-
-  cursor: pointer;
+  font-size: 14px;  
 `;
 
 interface DeletePersonProps {

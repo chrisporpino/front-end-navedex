@@ -14,13 +14,10 @@ const Icon = styled.img`
   cursor: pointer;
 `;
 
-
 interface IconsComponentProps {
   toDelete: string;
   link: string;
 }
-
-// const IconsComponent: React.FC<BlackButtonProps> = ({ text, link }) => {
 
 function IconsComponent() {
 

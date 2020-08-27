@@ -9,13 +9,13 @@ import api, { headers } from "../../services/axios";
 import { useProtectedPage } from "../../hooks/useProtectedPage";
 
 const Root = styled.div`
-  width: 100vw;
-  height: 100;
+  min-height: 100vh;
   margin: 0 auto;
   background: #ffffff;
 `;
 
 const MainContainer = styled.main`
+  height: 100%;
   padding: 0 2rem;
   margin-bottom: 2rem;
 `;
@@ -41,7 +41,7 @@ const PeopleSection = styled.section`
   height: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 function Home() {
