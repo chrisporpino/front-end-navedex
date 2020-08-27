@@ -1,5 +1,4 @@
 # Nave.rs | Desafio de Front-end
-Desenvolvimento de aplicação front-end Web com React.
 
 ![Screenshot_1](https://raw.githubusercontent.com/cporpino/demonstrations/master/navedex/nave_cover.png)
 <br>
