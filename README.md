@@ -6,8 +6,6 @@ Desenvolvimento de aplicações completas, incluindo frontend Web com React e ba
 
 # Navedex - Front-end
 
-:dash: [Deploy da aplicação](http://ifuture-sagan.surge.sh/)
-
 <p align="center">
   <img  height='466.65' src='https://raw.githubusercontent.com/cporpino/demonstrations/master/navedex/presentation.gif'>
 </p>
