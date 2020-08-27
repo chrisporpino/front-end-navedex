@@ -32,7 +32,7 @@ Eu ainda não tinha usado modais em typescript. Esse requisito me pareceu um gra
 
 - **Converter datas e calcular a diferença entre elas**
 
-A API recebe e fornece datas de nascimento e adimissão, enquanto o layout do Figma apresenta "idade" e "tempo de empresa". A princípio, pensei ser um deslize na prototipação, mas depois resolvi tomar como parte do desafio e tentar resolver isso, simulando uma situação real na empresa. Busquei em meus materiais de estudo, google e acabei encontrando uma solução similar no Stack Overflow. Apliquei, com as adaptações necessárias, e funcionou. Nâo resolve permanentemente, mas a título de MVP, está apropriado.
+A API recebe e fornece datas de nascimento e adimissão, enquanto o layout do Figma apresenta "idade" e "tempo de empresa". A princípio, pensei ser um deslize na prototipação, mas depois resolvi tomar como parte do desafio e tentar resolver isso, simulando uma situação real na empresa. Busquei em meus materiais de estudo, google e acabei encontrando uma solução similar no Stack Overflow. Apliquei, com as adaptações necessárias, e funcionou. Não resolve permanentemente, mas a título de MVP, está apropriado.
 
 <br>
 
