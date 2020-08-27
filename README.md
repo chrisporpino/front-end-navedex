@@ -1,5 +1,5 @@
 # Nave.rs | Desafio de Front-end
-Desenvolvimento de aplicações completas, incluindo frontend Web com React e backend com Node.js.
+Desenvolvimento de aplicação front-end Web com React.
 
 ![Screenshot_1](https://raw.githubusercontent.com/cporpino/demonstrations/master/navedex/nave_cover.png)
 <br>
