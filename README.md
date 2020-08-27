@@ -48,6 +48,6 @@ A API recebe e fornece datas de nascimento e adimissão, enquanto o layout do Fi
 
 [Linkedin](https://www.linkedin.com/in/cporpino/) |
 [Github](https://github.com/cporpino) |
-[Email](cgporpinof@gmail.com)
+[Email](mailto:cgporpinof@gmail.com)
 
 </div>
