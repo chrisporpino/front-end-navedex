@@ -128,7 +128,12 @@ const ShowPerson: React.FC<ShowPersonProps> = ({
 
   const history = useHistory();
 
+  function saveId() {
+    window.localStorage.setItem("person_id", person.id);
+  }
+
   function handleClickToEdit() {
+    saveId();
     history.push("/edit");
   }
 
