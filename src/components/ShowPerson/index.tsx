@@ -1,10 +1,7 @@
-import React /* , { useState, useEffect } */ from "react";
+import React from "react";
 import styled from "styled-components";
 
 import closeIcon from "../../assets/images/icons/close-icon.png";
-// import api, { headers } from "../../services/axios";
-// import { useProtectedPage } from "../../hooks/useProtectedPage";
-
 import deleteIcon from "../../assets/images/icons/delete-icon.png";
 import editIcon from "../../assets/images/icons/edit-icon.png";
 import { useHistory } from "react-router-dom";
@@ -42,14 +39,13 @@ const InfoContainer = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2rem 1rem 1.5rem 2rem;
 `;
 
 const TextContainer = styled.section`
-  width: 100%;
+  height: 100%;
   display: flex;
-
   justify-content: space-between;
+  padding: 2rem 0 0 2rem;
 `;
 
 const TextBox = styled.div`
@@ -57,14 +53,13 @@ const TextBox = styled.div`
   flex-direction: column;
 `;
 
-const TextBlock = styled.div``;
-
 const TextTitle = styled.h1`
   font-family: Montserrat;
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 36px;
+  margin-bottom: 10px;
 `;
 
 const CommonText = styled.p`
@@ -81,6 +76,7 @@ const BoldText = styled.strong`
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
+  margin: 24px 0 10px 0;
 `;
 
 const Picture = styled.img`
@@ -92,6 +88,7 @@ const IconsContainer = styled.div`
   width: 56px;
   display: flex;
   justify-content: space-between;
+  margin: 2rem 1.5rem;
 `;
 
 const Icon = styled.img`
@@ -101,7 +98,7 @@ const Icon = styled.img`
 const CloseIcon = styled.img`
   width: 24px;
   height: 24px;
-  margin: -16px 0 0 0;
+  margin: -16px 16px 0 0;
   cursor: pointer;
 `;
 
@@ -120,7 +117,7 @@ const ShowPerson: React.FC<ShowPersonProps> = ({
   handleClickToDelete,
   person,
   age,
-  timeOfWork
+  timeOfWork,
 }) => {
   const overlayRef = React.useRef(null);
   const handleOverlayClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -148,20 +145,14 @@ const ShowPerson: React.FC<ShowPersonProps> = ({
               <TextTitle>{person.name}</TextTitle>
               <CommonText>{person.job_role}</CommonText>
 
-              <TextBlock>
-                <BoldText>Idade</BoldText>
-                <CommonText>{age}</CommonText>
-              </TextBlock>
+              <BoldText>Idade</BoldText>
+              <CommonText>{age}</CommonText>
 
-              <TextBlock>
-                <BoldText>Tempo de Empresa</BoldText>
-                <CommonText>{timeOfWork}</CommonText>
-              </TextBlock>
+              <BoldText>Tempo de Empresa</BoldText>
+              <CommonText>{timeOfWork}</CommonText>
 
-              <TextBlock>
-                <BoldText>Projetos que participou</BoldText>
-                <CommonText>{person.project}</CommonText>
-              </TextBlock>
+              <BoldText>Projetos que participou</BoldText>
+              <CommonText>{person.project}</CommonText>
             </TextBox>
 
             <CloseIcon onClick={onClose} src={closeIcon} alt="Fechar" />
@@ -172,7 +163,6 @@ const ShowPerson: React.FC<ShowPersonProps> = ({
               src={deleteIcon}
               alt="Deletar"
             />
-
             <Icon onClick={handleClickToEdit} src={editIcon} alt="Editar" />
           </IconsContainer>
         </InfoContainer>
